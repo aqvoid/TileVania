@@ -3,10 +3,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float runSpeed = 5;
-    [SerializeField] private float jumpForce = 5;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float climbSpeed;
 
     private Vector2 moveInput;
+    private float startGravity = 1.5f;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -24,13 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Run();
+        Climb();
     }
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
 
     private void OnMove(InputValue inputValue)
     {
         moveInput = inputValue.Get<Vector2>();
-        Debug.Log(moveInput);
     }
 
     private void OnJump(InputValue inputValue)
@@ -41,11 +43,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
-        Vector2 playerVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
-        rb.linearVelocity = playerVelocity;
+        if (!col.IsTouchingLayers(LayerMask.GetMask("Surface")) &&
+            !col.IsTouchingLayers(LayerMask.GetMask("Ladder"))) return;
+
+        rb.linearVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
 
         FlipSpriteOnRun();
         AnimateOnRun();
+    }
+
+    private void Climb()
+    {
+        if (!col.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            rb.gravityScale = startGravity;
+            return;
+        }
+
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, moveInput.y * climbSpeed);
     }
 
     private void AnimateOnRun()
