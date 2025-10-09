@@ -10,20 +10,21 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
         Run();
-        FlipSpriteOnRun();
-
         Jump();
     }
+    private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
 
     private void OnMove(InputValue inputValue)
     {
@@ -35,6 +36,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 playerVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
         rb.linearVelocity = playerVelocity;
+
+        FlipSpriteOnRun();
+        AnimateOnRun();
+    }
+
+    private void AnimateOnRun()
+    {
+        if (IsMoving()) anim.SetBool("isRunning", true);
+        else anim.SetBool("isRunning", false);
     }
 
     private void Jump()
@@ -43,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipSpriteOnRun()
     {
-        if (Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon)
+        if (IsMoving())
             sr.flipX = rb.linearVelocity.x < 0;
     }
 
