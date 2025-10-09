@@ -28,7 +28,9 @@ public class PlayerMovement : MonoBehaviour
         Run();
         Climb();
     }
+
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
+    private bool IsClimbing() => Mathf.Abs(rb.linearVelocity.y) > Mathf.Epsilon;
 
     private void OnMove(InputValue inputValue)
     {
@@ -62,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, moveInput.y * climbSpeed);
+
+        AnimateOnClimb();
     }
 
     private void AnimateOnRun()
@@ -69,6 +73,13 @@ public class PlayerMovement : MonoBehaviour
         if (IsMoving()) anim.SetBool("isRunning", true);
         else anim.SetBool("isRunning", false);
     }
+    
+    private void AnimateOnClimb()
+    {
+        if (IsClimbing()) anim.SetBool("isClimbing", true);
+        else anim.SetBool("isClimbing", false);
+    }
+
     private void FlipSpriteOnRun()
     {
         if (IsMoving())
