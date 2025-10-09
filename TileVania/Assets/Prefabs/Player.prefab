@@ -49,6 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f42126bce2fdf845bbf0cb9584716c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  runSpeed: 5
+  jumpForce: 5
+  visibleVelocity: {x: 0, y: 0}
 --- !u!212 &7008694202234110579
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -168,8 +171,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Offset: {x: 0, y: -0.06276524}
+  m_Size: {x: 0.5, y: 0.8744695}
   m_Direction: 0
 --- !u!95 &7359257863707069433
 Animator:

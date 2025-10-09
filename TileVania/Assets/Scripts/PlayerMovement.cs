@@ -7,16 +7,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 5;
 
     private Vector2 moveInput;
+
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
         Run();
+        FlipSpriteOnRun();
+
         Jump();
     }
 
@@ -34,6 +39,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+    }
+
+    private void FlipSpriteOnRun()
+    {
+        if (Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon)
+            sr.flipX = rb.linearVelocity.x < 0;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
