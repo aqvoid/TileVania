@@ -11,18 +11,19 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
+    private Collider2D col;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
     }
 
     private void FixedUpdate()
     {
         Run();
-        Jump();
     }
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
 
@@ -30,6 +31,12 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = inputValue.Get<Vector2>();
         Debug.Log(moveInput);
+    }
+
+    private void OnJump(InputValue inputValue)
+    {
+        if (!col.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
+        if (inputValue.isPressed) rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
     private void Run()
@@ -46,23 +53,9 @@ public class PlayerMovement : MonoBehaviour
         if (IsMoving()) anim.SetBool("isRunning", true);
         else anim.SetBool("isRunning", false);
     }
-
-    private void Jump()
-    {
-    }
-
     private void FlipSpriteOnRun()
     {
         if (IsMoving())
             sr.flipX = rb.linearVelocity.x < 0;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            //Run();
-            //Jump();
-        }
     }
 }
