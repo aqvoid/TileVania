@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   runSpeed: 4
   jumpForce: 6
+  climbSpeed: 4
 --- !u!212 &7008694202234110579
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +97,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1608563727
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 1857188551261513057, guid: 0c63a118310dbee4688a7ac4bb29f18b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
