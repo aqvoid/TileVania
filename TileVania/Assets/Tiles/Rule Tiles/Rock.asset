@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Idk
+  m_Name: Rock
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.RuleTile
   m_DefaultSprite: {fileID: 624850092, guid: c64e4a3f57b7f2a479b2b95d42a16844, type: 3}
   m_DefaultGameObject: {fileID: 0}
