@@ -6,9 +6,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float climbSpeed;
+    [SerializeField, Range(1, 4)] private float startGravity = 2f;
 
     private Vector2 moveInput;
-    private float startGravity = 1.5f;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -45,9 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
-        if (!col.IsTouchingLayers(LayerMask.GetMask("Surface")) &&
-            !col.IsTouchingLayers(LayerMask.GetMask("Ladder"))) return;
-
         rb.linearVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
 
         FlipSpriteOnRun();
