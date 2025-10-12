@@ -13,14 +13,16 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
-    private Collider2D col;
+    private CapsuleCollider2D bodyCol;
+    private BoxCollider2D feetCol;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        col = GetComponent<Collider2D>();
+        bodyCol = GetComponent<CapsuleCollider2D>();
+        feetCol = GetComponent<BoxCollider2D>();
     }
 
     private void FixedUpdate()
@@ -39,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (!col.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
+        if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
         if (inputValue.isPressed) rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
@@ -53,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Climb()
     {
-        if (!col.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb.gravityScale = startGravity;
             return;
