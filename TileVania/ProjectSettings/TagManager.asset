@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Surface
+  - Ladder
+  - Player
+  - Background
+  - Bouncing
   - 
   - 
   - 
@@ -41,3 +41,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 439979261
+    locked: 0
+  - name: Ladder
+    uniqueID: 2625207293
+    locked: 0
+  - name: Water
+    uniqueID: 313913953
+    locked: 0
+  - name: Platforms
+    uniqueID: 2649589117
+    locked: 0
+  - name: Player
+    uniqueID: 2686403569
+    locked: 0
+  m_RenderingLayers:
+  - Default
