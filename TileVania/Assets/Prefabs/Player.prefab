@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6786895875116088520}
   - component: {fileID: 3268802576145435525}
+  - component: {fileID: 4953165042805405969}
   - component: {fileID: 7008694202234110579}
   - component: {fileID: 8519399855306069844}
   - component: {fileID: 1978990099239053166}
@@ -54,6 +55,18 @@ MonoBehaviour:
   jumpForce: 8
   climbSpeed: 4
   startGravity: 2
+--- !u!114 &4953165042805405969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810285051517300989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b089ca629141543b8cb37689ba1bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMortality
 --- !u!212 &7008694202234110579
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -99,7 +112,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1608563727
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 1857188551261513057, guid: 0c63a118310dbee4688a7ac4bb29f18b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
