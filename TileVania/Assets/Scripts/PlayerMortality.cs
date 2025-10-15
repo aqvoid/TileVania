@@ -6,7 +6,7 @@ public class PlayerMortality : MonoBehaviour
 
     public void PlayerDeath(CapsuleCollider2D playerBodyCollider, Animator playerAnimator, Rigidbody2D playerRigidbody2D)
     {
-        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         { 
             IsAlive = false;
             playerAnimator.SetTrigger("isDying");
