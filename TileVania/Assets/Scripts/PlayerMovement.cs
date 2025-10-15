@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private CapsuleCollider2D bodyCol;
     private BoxCollider2D feetCol;
+    
+    private PlayerMortality playerMortality;
 
     private void Awake()
     {
@@ -23,12 +25,15 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         bodyCol = GetComponent<CapsuleCollider2D>();
         feetCol = GetComponent<BoxCollider2D>();
+        playerMortality = GetComponent<PlayerMortality>();
     }
 
     private void FixedUpdate()
     {
+        if (!playerMortality.IsAlive) return;
         Run();
         Climb();
+        playerMortality.PlayerDeath(bodyCol, anim, rb);
     }
 
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
@@ -36,11 +41,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(InputValue inputValue)
     {
+        if (!playerMortality.IsAlive) return;
         moveInput = inputValue.Get<Vector2>();
     }
 
     private void OnJump(InputValue inputValue)
     {
+        if (!playerMortality.IsAlive) return;
         if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
         if (inputValue.isPressed) rb.linearVelocity += new Vector2(0f, jumpForce);
     }
