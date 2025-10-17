@@ -11,37 +11,42 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
 
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
     private Animator anim;
     private CapsuleCollider2D bodyCol;
     private BoxCollider2D feetCol;
+    
+    private PlayerMortality playerMortality;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         bodyCol = GetComponent<CapsuleCollider2D>();
         feetCol = GetComponent<BoxCollider2D>();
+        playerMortality = GetComponent<PlayerMortality>();
     }
 
     private void FixedUpdate()
     {
+        if (!playerMortality.IsAlive) return;
         Run();
         Climb();
+        playerMortality.PlayerDeath(bodyCol, anim, rb);
     }
 
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
     private bool IsClimbing() => Mathf.Abs(rb.linearVelocity.y) > Mathf.Epsilon;
 
+
     private void OnMove(InputValue inputValue)
     {
+        if (!playerMortality.IsAlive) return;
         moveInput = inputValue.Get<Vector2>();
     }
 
     private void OnJump(InputValue inputValue)
     {
-        if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
+        if (!playerMortality.IsAlive || !feetCol.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
         if (inputValue.isPressed) rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
@@ -58,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb.gravityScale = startGravity;
+            anim.SetBool("isClimbing", false);
             return;
         }
 
@@ -75,13 +81,11 @@ public class PlayerMovement : MonoBehaviour
     
     private void AnimateOnClimb()
     {
-        if (IsClimbing()) anim.SetBool("isClimbing", true);
-        else anim.SetBool("isClimbing", false);
+        if (IsClimbing()) anim.SetBool("isClimbing", IsClimbing());
     }
 
     private void FlipSpriteOnRun()
     {
-        if (IsMoving())
-            sr.flipX = rb.linearVelocity.x < 0;
+        if (IsMoving()) transform.localScale = new Vector2(Mathf.Sign(rb.linearVelocity.x), 1f);
     }
 }
