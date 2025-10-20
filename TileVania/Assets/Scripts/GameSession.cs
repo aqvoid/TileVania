@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameSession : MonoBehaviour
 {
     [SerializeField] private int playerLives = 3;
+    [SerializeField] private int score = 0;
 
     private UIController uiController;
 
@@ -20,6 +21,7 @@ public class GameSession : MonoBehaviour
     private void Start()
     {
         uiController.ChangeHealthText();
+        uiController.ChangeScoreText();
     }
 
     private void TakeLife()
@@ -42,4 +44,11 @@ public class GameSession : MonoBehaviour
     }
 
     public int GetHealth() => playerLives;
+    public int GetScore() => score;
+
+    public void AddToScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        uiController.ChangeScoreText();
+    }
 }

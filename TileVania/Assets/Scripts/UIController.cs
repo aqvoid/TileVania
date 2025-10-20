@@ -13,9 +13,7 @@ public class UIController : MonoBehaviour
         gameSession = GetComponentInParent<GameSession>();
     }
 
-    public void ChangeHealthText()
-    {
-        healthText.text = $"Health: {gameSession.GetHealth()}";
-    }
+    public void ChangeHealthText() => healthText.text = $"Health: {gameSession.GetHealth()}";
 
+    public void ChangeScoreText() => scoreText.text = $"Score: {gameSession.GetScore()}";
 }
