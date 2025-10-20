@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private CapsuleCollider2D bodyCol;
     private BoxCollider2D feetCol;
-    
     private PlayerMortality playerMortality;
 
     private void Awake()
@@ -33,10 +32,8 @@ public class PlayerMovement : MonoBehaviour
         Climb();
         playerMortality.PlayerDeath(bodyCol, anim, rb);
     }
-
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
-    private bool IsClimbing() => Mathf.Abs(rb.linearVelocity.y) > Mathf.Epsilon;
-
+    private bool IsClimbing() => Mathf.Abs(moveInput.y) > Mathf.Epsilon;
 
     private void OnMove(InputValue inputValue)
     {
@@ -46,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (!playerMortality.IsAlive || !feetCol.IsTouchingLayers(LayerMask.GetMask("Surface"))) return;
-        if (inputValue.isPressed) rb.linearVelocity += new Vector2(0f, jumpForce);
+        if (!playerMortality.IsAlive) return;
+        if (inputValue.isPressed && feetCol.IsTouchingLayers(LayerMask.GetMask("Surface")))
+            rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
     private void Run()
@@ -60,17 +58,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Climb()
     {
-        if (!feetCol.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (bodyCol.IsTouchingLayers(LayerMask.GetMask("Ladder")) && IsClimbing())
+        {
+            rb.gravityScale = 0f;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, moveInput.y * climbSpeed);
+            IsAnimateOnClimb(true);
+        }
+        else
         {
             rb.gravityScale = startGravity;
-            anim.SetBool("isClimbing", false);
-            return;
+            IsAnimateOnClimb(false);
         }
-
-        rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, moveInput.y * climbSpeed);
-
-        AnimateOnClimb();
     }
 
     private void AnimateOnRun()
@@ -79,9 +77,9 @@ public class PlayerMovement : MonoBehaviour
         else anim.SetBool("isRunning", false);
     }
     
-    private void AnimateOnClimb()
+    private void IsAnimateOnClimb(bool state)
     {
-        if (IsClimbing()) anim.SetBool("isClimbing", IsClimbing());
+        anim.SetBool("isClimbing", state);
     }
 
     private void FlipSpriteOnRun()

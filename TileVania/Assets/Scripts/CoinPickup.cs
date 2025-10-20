@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
 {
-    [SerializeField] AudioClip coinPickupSFX;
+    [SerializeField] private AudioClip coinPickupSFX;
+    [SerializeField] private int pointAddForPickup = 100;
 
     private bool wasCollected = false;
 
@@ -11,6 +12,7 @@ public class CoinPickup : MonoBehaviour
         if (other.CompareTag("Player") && !wasCollected)
         {
             wasCollected = true;
+            FindFirstObjectByType<GameSession>().AddToScore(pointAddForPickup);
             AudioSource.PlayClipAtPoint(coinPickupSFX, transform.position);
             Destroy(gameObject);
         }

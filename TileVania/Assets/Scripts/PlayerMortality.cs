@@ -11,6 +11,7 @@ public class PlayerMortality : MonoBehaviour
             IsAlive = false;
             playerAnimator.SetTrigger("isDying");
             playerRigidbody2D.linearVelocity += new Vector2(0f, 10f);
+            FindAnyObjectByType<GameSession>().ProcessPlayerDeath();
         }
     }
 }
