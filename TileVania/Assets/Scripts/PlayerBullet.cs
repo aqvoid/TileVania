@@ -6,6 +6,7 @@ public class PlayerBullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            FindFirstObjectByType<GameSession>().AddToScore(50);
             Destroy(collision.gameObject);
         }
         Destroy(gameObject);
