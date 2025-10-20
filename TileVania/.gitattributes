@@ -1,0 +1,4 @@
+# Ignoring Unity service files
+ProjectSettings/* linguist-vendored
+Packages/* linguist-vendored
+Assets/Third?Party/TextMesh?Pro/** linguist-generated
