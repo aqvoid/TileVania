@@ -15972,6 +15972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinPickup
   coinPickupSFX: {fileID: 8300000, guid: 435186f272adaac4baaaf45b7d09fa31, type: 3}
+  pointAddForPickup: 100
 --- !u!1 &730991840
 GameObject:
   m_ObjectHideFlags: 0
@@ -16234,6 +16235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinPickup
   coinPickupSFX: {fileID: 8300000, guid: 435186f272adaac4baaaf45b7d09fa31, type: 3}
+  pointAddForPickup: 100
 --- !u!1 &793228679
 GameObject:
   m_ObjectHideFlags: 0
