@@ -7,6 +7,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private float bulletSpeed = 5f;
 
     private PlayerMortality playerMortality;
+    private PlayerMovement playerMovement;
 
     private PlayerInput playerInput;
     private InputAction attackAction;
@@ -16,6 +17,7 @@ public class PlayerGun : MonoBehaviour
     {
         playerMortality = GetComponentInParent<PlayerMortality>();
         playerInput = GetComponentInParent<PlayerInput>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         attackAction = playerInput.actions["Attack"];
         attackAction.performed += OnAttack;
     }
@@ -28,6 +30,7 @@ public class PlayerGun : MonoBehaviour
         GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
 
         Rigidbody2D bulletRb = newBullet.GetComponent<Rigidbody2D>();
-        bulletRb.linearVelocity = new Vector2(transform.parent.localScale.x * bulletSpeed, bulletRb.linearVelocity.y);
+        bulletRb.linearVelocity = new Vector2(transform.parent.localScale.x * bulletSpeed, 0f) + playerMovement.GetVelocity();
+        bulletRb.angularVelocity = Random.Range(-180, 180);
     }
 }

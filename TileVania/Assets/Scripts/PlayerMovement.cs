@@ -86,4 +86,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsMoving()) transform.localScale = new Vector2(Mathf.Sign(rb.linearVelocity.x), 1f);
     }
+
+    public Vector2 GetVelocity() => rb.linearVelocity;
 }
