@@ -27,10 +27,20 @@ public class PlayerGun : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext context)
     {
         if (!playerMortality.IsAlive) return;
-        GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
 
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 direction = (mousePos - (Vector2)transform.position).normalized;
+
+        if (direction.x != 0)
+        {
+            float facing = Mathf.Sign(direction.x);
+            transform.parent.localScale = new Vector2(Mathf.Abs(transform.parent.localScale.x) * facing, 1f);
+        }
+
+        GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
         Rigidbody2D bulletRb = newBullet.GetComponent<Rigidbody2D>();
-        bulletRb.linearVelocity = new Vector2(transform.parent.localScale.x * bulletSpeed, 0f) + playerMovement.GetVelocity();
+
+        bulletRb.linearVelocity = direction * bulletSpeed + playerMovement.GetVelocity();
         bulletRb.angularVelocity = Random.Range(-180, 180);
     }
 }
