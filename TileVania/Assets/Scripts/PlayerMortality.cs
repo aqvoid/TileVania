@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class PlayerMortality : MonoBehaviour
 {
-    public bool IsAlive { get; private set; } = true;
+    private bool isAlive = true;
 
-    public void PlayerDeath(CapsuleCollider2D playerBodyCollider, Animator playerAnimator, Rigidbody2D playerRigidbody2D)
+    private void FixedUpdate() => PlayerDeath();
+
+    public void PlayerDeath()
     {
-        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
+        if (GetComponent<CapsuleCollider2D>().IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")) && isAlive)
         { 
-            IsAlive = false;
-            playerAnimator.SetTrigger("isDying");
-            playerRigidbody2D.linearVelocity += new Vector2(0f, 10f);
+            isAlive = false;
+            GetComponent<Animator>().SetTrigger("isDying");
+            GetComponent<Rigidbody2D>().linearVelocity += new Vector2(0f, 10f);
+            GetComponent<PlayerMovement>().enabled = false;
+            GetComponentInChildren<PlayerGun>().enabled = false;
             FindAnyObjectByType<GameSession>().ProcessPlayerDeath();
         }
     }

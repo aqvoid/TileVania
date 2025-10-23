@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGun
   bullet: {fileID: 2224881667944926687, guid: 16fb506ff53216141a1a2744187227fb, type: 3}
-  bulletSpeed: 10
+  bulletSpeed: 20
+  bulletCooldown: 0.25
 --- !u!1 &1810285051517300989
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +103,10 @@ MonoBehaviour:
   jumpForce: 8
   climbSpeed: 4
   startGravity: 2
+  dashSpeed: 10
+  dashCooldown: 1
+  dashDuration: 0.2
+  dashAnimation: {fileID: 7400000, guid: f25fc17da7bf2644dbf7a72661ed76d3, type: 2}
 --- !u!114 &4953165042805405969
 MonoBehaviour:
   m_ObjectHideFlags: 0
