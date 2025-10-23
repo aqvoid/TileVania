@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashCooldown;
     [SerializeField] private float dashDuration;
+    [SerializeField] private AnimationClip dashAnimation;
 
     private Vector2 moveInput;
     private bool canDash = true;
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnSprint(InputValue inputValue)
     {
         if (!playerMortality.IsAlive) return;
-        if (inputValue.isPressed && canDash && !isDashing) StartCoroutine(DashCooldown());
+        if (inputValue.isPressed && canDash && !isDashing) StartCoroutine(Dash());
     }
 
     private void Run()
@@ -97,26 +98,39 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isClimbing", state);
     }
 
+    private void AnimateOnDash(bool state)
+    {
+        anim.SetFloat("dashSpeed", dashAnimation.length / dashDuration);
+        anim.SetBool("isDashing", state);
+    }
+
     private void FlipSpriteOnRun()
     {
+        if (isDashing) return;
         if (IsMoving()) transform.localScale = new Vector2(Mathf.Sign(rb.linearVelocity.x), 1f);
     }
 
-    private IEnumerator DashCooldown()
+    private IEnumerator Dash()
     {
-        canDash = false;
-        isDashing = true;
+        if (!IsClimbing())
+        {
 
-        float dashDir = moveInput.x != 0 ? Mathf.Sign(moveInput.x) : transform.localScale.x;
-        rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0f);
-        
-        yield return new WaitForSeconds(dashDuration); // Immediately After Dash
+            canDash = false;
+            isDashing = true;
+            AnimateOnDash(true);
 
-        isDashing = false;
+            float dashDir = moveInput.x != 0 ? Mathf.Sign(moveInput.x) : transform.localScale.x;
+            rb.linearVelocity = new Vector2(dashDir * dashSpeed, 1f);
 
-        yield return new WaitForSeconds(dashCooldown); // After Dash Cooldown
+            yield return new WaitForSeconds(dashDuration); // Immediately After Dash
 
-        canDash = true;
+            isDashing = false;
+            AnimateOnDash(false);
+
+            yield return new WaitForSeconds(dashCooldown); // After Dash Cooldown
+
+            canDash = true;
+        }
     }
 
     public Vector2 GetVelocity() => rb.linearVelocity;

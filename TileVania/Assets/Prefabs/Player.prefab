@@ -103,9 +103,10 @@ MonoBehaviour:
   jumpForce: 8
   climbSpeed: 4
   startGravity: 2
-  dashSpeed: 15
+  dashSpeed: 10
   dashCooldown: 1
-  dashDuration: 0.1
+  dashDuration: 0.2
+  dashAnimation: {fileID: 7400000, guid: f25fc17da7bf2644dbf7a72661ed76d3, type: 2}
 --- !u!114 &4953165042805405969
 MonoBehaviour:
   m_ObjectHideFlags: 0
