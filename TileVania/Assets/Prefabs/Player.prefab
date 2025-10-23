@@ -103,6 +103,9 @@ MonoBehaviour:
   jumpForce: 8
   climbSpeed: 4
   startGravity: 2
+  dashSpeed: 15
+  dashCooldown: 1
+  dashDuration: 0.1
 --- !u!114 &4953165042805405969
 MonoBehaviour:
   m_ObjectHideFlags: 0

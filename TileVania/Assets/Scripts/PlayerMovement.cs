@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float climbSpeed;
     [SerializeField, Range(1, 4)] private float startGravity = 2f;
 
+    [Header("=== Dash ===")]
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashDuration;
+
     private Vector2 moveInput;
+    private bool canDash = true;
+    private bool isDashing = false;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -48,9 +56,16 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
+    private void OnSprint(InputValue inputValue)
+    {
+        if (!playerMortality.IsAlive) return;
+        if (inputValue.isPressed && canDash && !isDashing) StartCoroutine(DashCooldown());
+    }
+
     private void Run()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
+        if (!isDashing)
+            rb.linearVelocity = new Vector2(moveInput.x * runSpeed, rb.linearVelocity.y);
 
         FlipSpriteOnRun();
         AnimateOnRun();
@@ -85,6 +100,27 @@ public class PlayerMovement : MonoBehaviour
     private void FlipSpriteOnRun()
     {
         if (IsMoving()) transform.localScale = new Vector2(Mathf.Sign(rb.linearVelocity.x), 1f);
+    }
+
+    private IEnumerator DashCooldown()
+    {
+        // Dashing
+
+        canDash = false;
+        isDashing = true;
+
+        rb.gravityScale = 0.25f;
+        rb.linearVelocity = new Vector2 (moveInput.x * dashSpeed, rb.linearVelocity.y);
+        
+        yield return new WaitForSeconds(dashDuration); // Immediately After Dash
+
+        isDashing = false;
+
+        rb.gravityScale = startGravity;
+
+        yield return new WaitForSeconds(dashCooldown); // After Dash Cooldown
+
+        canDash = true;
     }
 
     public Vector2 GetVelocity() => rb.linearVelocity;
