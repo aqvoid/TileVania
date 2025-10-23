@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private CapsuleCollider2D bodyCol;
     private BoxCollider2D feetCol;
-    private PlayerMortality playerMortality;
 
     private void Awake()
     {
@@ -31,35 +30,30 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         bodyCol = GetComponent<CapsuleCollider2D>();
         feetCol = GetComponent<BoxCollider2D>();
-        playerMortality = GetComponent<PlayerMortality>();
     }
 
     private void FixedUpdate()
     {
-        if (!playerMortality.IsAlive) return;
         Run();
         Climb();
-        playerMortality.PlayerDeath(bodyCol, anim, rb);
     }
+
     private bool IsMoving() => Mathf.Abs(rb.linearVelocity.x) > Mathf.Epsilon;
     private bool IsClimbing() => Mathf.Abs(moveInput.y) > Mathf.Epsilon;
 
     private void OnMove(InputValue inputValue)
     {
-        if (!playerMortality.IsAlive) return;
         moveInput = inputValue.Get<Vector2>();
     }
 
     private void OnJump(InputValue inputValue)
     {
-        if (!playerMortality.IsAlive) return;
         if (inputValue.isPressed && feetCol.IsTouchingLayers(LayerMask.GetMask("Surface")))
             rb.linearVelocity += new Vector2(0f, jumpForce);
     }
 
     private void OnSprint(InputValue inputValue)
     {
-        if (!playerMortality.IsAlive) return;
         if (inputValue.isPressed && canDash && !isDashing) StartCoroutine(Dash());
     }
 
@@ -114,7 +108,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!IsClimbing())
         {
-
             canDash = false;
             isDashing = true;
             AnimateOnDash(true);
@@ -132,6 +125,4 @@ public class PlayerMovement : MonoBehaviour
             canDash = true;
         }
     }
-
-    public Vector2 GetVelocity() => rb.linearVelocity;
 }

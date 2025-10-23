@@ -8,9 +8,6 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private float bulletCooldown = 1f;
 
-    private PlayerMortality playerMortality;
-    private PlayerMovement playerMovement;
-
     private Vector2 mousePos;
     private Vector2 direction;
     private bool isShooting = false;
@@ -19,11 +16,12 @@ public class PlayerGun : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction attackAction;
 
+    private Rigidbody2D playerRb;
+
     private void Awake()
     {
-        playerMortality = GetComponentInParent<PlayerMortality>();
         playerInput = GetComponentInParent<PlayerInput>();
-        playerMovement = GetComponentInParent<PlayerMovement>();
+        playerRb = GetComponentInParent<Rigidbody2D>();
 
         attackAction = playerInput.actions["Attack"];
     }
@@ -42,7 +40,6 @@ public class PlayerGun : MonoBehaviour
 
     private void OnAttackStarted(InputAction.CallbackContext context)
     {
-        if (!playerMortality.IsAlive) return;
         if (isShooting) return;
         isShooting = true;
         StartCoroutine(AutoShoot());
@@ -77,7 +74,7 @@ public class PlayerGun : MonoBehaviour
         GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
         Rigidbody2D bulletRb = newBullet.GetComponent<Rigidbody2D>();
 
-        bulletRb.linearVelocity = direction * bulletSpeed + playerMovement.GetVelocity();
+        bulletRb.linearVelocity = direction * bulletSpeed + (playerRb.linearVelocity / 2);
         bulletRb.angularVelocity = Random.Range(-180, 180);
     }
 
