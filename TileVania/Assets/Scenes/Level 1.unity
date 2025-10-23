@@ -17159,14 +17159,22 @@ PrefabInstance:
       objectReference: {fileID: 8359514043911037876}
     - target: {fileID: 4681996980177565573, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
       propertyPath: HashOfParent.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4681996980177565573, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
       propertyPath: HashOfParent.Array.data[3].Hash
       value: -1752896643
       objectReference: {fileID: 0}
     - target: {fileID: 4681996980177565573, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
+      propertyPath: HashOfParent.Array.data[4].Hash
+      value: 773355233
+      objectReference: {fileID: 0}
+    - target: {fileID: 4681996980177565573, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
       propertyPath: HashOfParent.Array.data[3].HashOfParent
+      value: 756556552
+      objectReference: {fileID: 0}
+    - target: {fileID: 4681996980177565573, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
+      propertyPath: HashOfParent.Array.data[4].HashOfParent
       value: 756556552
       objectReference: {fileID: 0}
     - target: {fileID: 4930814263029729585, guid: f684de79f32543a44bb3da603960b9d0, type: 3}
