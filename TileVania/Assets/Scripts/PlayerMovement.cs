@@ -104,19 +104,15 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DashCooldown()
     {
-        // Dashing
-
         canDash = false;
         isDashing = true;
 
-        rb.gravityScale = 0.25f;
-        rb.linearVelocity = new Vector2 (moveInput.x * dashSpeed, rb.linearVelocity.y);
+        float dashDir = moveInput.x != 0 ? Mathf.Sign(moveInput.x) : transform.localScale.x;
+        rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0f);
         
         yield return new WaitForSeconds(dashDuration); // Immediately After Dash
 
         isDashing = false;
-
-        rb.gravityScale = startGravity;
 
         yield return new WaitForSeconds(dashCooldown); // After Dash Cooldown
 
