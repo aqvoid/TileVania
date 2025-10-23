@@ -1,5 +1,5 @@
 # Tilemania
-A 2D platformer game built with Unity where player uses environment to complete the levels! Along the way, bounce off the mushrooms and avoid spikes and kill slimes. Also you can collect coins, just for fun!
+A 2D platformer game built with Unity where player uses environment to complete the levels! Along the way, bounce off the mushrooms, avoid spikes and kill slimes by shooting. Also you can collect coins, just for fun!
 
 ###### Created and upgraded by aqvoidDev(me) while following a Complete C# Unity 2D Game Development from GameDev.tv(On Udemy)[https://www.udemy.com/course/unitycourse].
 
@@ -11,15 +11,20 @@ A 2D platformer game built with Unity where player uses environment to complete 
   - **S** - Climb Down
   - **D** - Run right
   - **Space** - Jump
-  - **Left Mouse Button** - Shoot a bullet
- 
+  - **Left Mouse Button** - Click to shoot a bullet | Hold to shoot automatically
+  - **Left Shift** - Dash
+    
 ## Features
 - 3 Tilemapped Levels with different difficulties
 - Simple controls and player movement
 - Health and Score points (UI)
 
 ## My Improvements After Completing the Project
-work in progress
+- Shooting in all directions
+- Auto-shooting & Gun cooldown
+- Horizontal dash
+- Dash has an animation (animation speed depends on dash duration)
+- Removed strange lines/gaps between tiles that sometimes appeared when the camera moved
 
 ## How to run
 1. Install the latest build TileVania_vX.X.zip from Releases [https://github.com/aqvoid/TileVania/releases]
